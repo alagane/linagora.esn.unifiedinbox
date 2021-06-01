@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 
 module.exports = dependencies => {
   const router = express.Router();
@@ -7,6 +8,7 @@ module.exports = dependencies => {
   const authorizationMW = dependencies('authorizationMW');
 
   router.all('/*',
+    cors({origin: true, credentials: true}),
     authorizationMW.requiresAPILogin,
     moduleMW.requiresModuleIsEnabledInCurrentDomain(moduleName)
   );
